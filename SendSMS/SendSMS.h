@@ -2,12 +2,15 @@
 //  SendSMS.h
 //  SendSMS
 //
-//  Created by Trevor Porter on 7/14/16.
-//  Copyright © 2016 Trevor Porter. All rights reserved.
+//  Created by Trevor Porter on 7/13/16.
+//  Copyright © 2016 Facebook. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "RCTBridgeModule.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SendSMS : NSObject
+@interface SendSMS : NSObject <MFMessageComposeViewControllerDelegate, RCTBridgeModule> {
+    RCTResponseSenderBlock _callback;
+}
 
 @end
