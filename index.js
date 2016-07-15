@@ -1,4 +1,5 @@
 'use strict';
 
 import { NativeModules } from 'react-native'
-module.exports = NativeModules.SendSMS;
+debugger;
+export default NativeModules.SendSMS;
