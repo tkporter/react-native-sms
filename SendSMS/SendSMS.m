@@ -6,8 +6,6 @@
 
 
 #import "SendSMS.h"
-#import "AppDelegate.h"
-#import "RCTConvert.h"
 
 @implementation SendSMS
 
@@ -37,7 +35,7 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
         }
 
         messageController.messageComposeDelegate = self;
-        rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
+        UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
         [rootView presentViewController:messageController animated:YES completion:nil];
     }
 }
