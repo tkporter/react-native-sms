@@ -74,7 +74,6 @@
   "main": "index.js",
   "name": "react-native-sms",
   "optionalDependencies": {},
-  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/tkporter/react-native-sms.git"
