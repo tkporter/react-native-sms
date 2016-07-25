@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/typorter/Flare/flare/node_modules/react-native-sms/android/src/main/assets"/><source path="/Users/typorter/Flare/flare/node_modules/react-native-sms/android/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Users/typorter/Flare/flare/node_modules/react-native-sms/android/src/release/assets"/></dataSet></merger>

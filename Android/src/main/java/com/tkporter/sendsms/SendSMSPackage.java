@@ -16,8 +16,9 @@ import java.util.List;
 public class SendSMSPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
-        List<NativeModule> modules = new ArrayList<>();
-        return modules;
+        //List<NativeModule> modules = new ArrayList<>();
+        //return modules;
+        return Arrays.<NativeModule>asList(new SendSMSModule(reactApplicationContext));
     }
 
     @Override
@@ -27,8 +28,9 @@ public class SendSMSPackage implements ReactPackage {
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return Arrays.<ViewManager>asList(
-                new SendSMSModule()
-        );
+        //return Arrays.<ViewManager>asList(
+        //        new SendSMSModule()
+       // );
+        return Collections.emptyList();
     }
 }

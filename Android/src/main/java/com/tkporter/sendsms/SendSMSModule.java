@@ -1,7 +1,14 @@
 package com.tkporter.sendsms;
 
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.ActivityNotFoundException;
+import android.content.IntentFilter;
+import android.view.Menu;
+import android.telephony.SmsManager;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -16,7 +23,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
 
-    public RNShareModule(ReactApplicationContext reactContext) {
+    public SendSMSModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
     }
@@ -29,8 +36,8 @@ public class SendSMSModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void send(ReadableMap options, final Callback callback) {
 
-        String phoneNo = '8054598678';
-        String msg = 'Howdy!';
+        String phoneNo = "8054598678";
+        String msg = "Howdy!";
         try {
 
             String SENT = "sent";
@@ -39,16 +46,16 @@ public class SendSMSModule extends ReactContextBaseJavaModule {
             Intent sentIntent = new Intent(SENT);
 /*Create Pending Intents*/
             PendingIntent sentPI = PendingIntent.getBroadcast(
-                    getApplicationContext(), 0, sentIntent,
+                    reactContext.getApplicationContext(), 0, sentIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
             Intent deliveryIntent = new Intent(DELIVERED);
 
             PendingIntent deliverPI = PendingIntent.getBroadcast(
-                    getApplicationContext(), 0, deliveryIntent,
+                    reactContext.getApplicationContext(), 0, deliveryIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 /* Register for SMS send action */
-            registerReceiver(new BroadcastReceiver() {
+            reactContext.registerReceiver(new BroadcastReceiver() {
 
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -79,7 +86,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule {
 
             }, new IntentFilter(SENT));
 /* Register for Delivery event */
-            registerReceiver(new BroadcastReceiver() {
+            reactContext.registerReceiver(new BroadcastReceiver() {
 
                 @Override
                 public void onReceive(Context context, Intent intent) {
