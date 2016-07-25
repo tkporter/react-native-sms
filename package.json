@@ -77,7 +77,7 @@
   "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tkporter4/react-native-sms.git"
+    "url": "git+ssh://git@github.com/tkporter/react-native-sms.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
