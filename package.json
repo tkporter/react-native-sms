@@ -74,7 +74,7 @@
   "main": "index.js",
   "name": "react-native-sms",
   "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
+  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/tkporter/react-native-sms.git"
