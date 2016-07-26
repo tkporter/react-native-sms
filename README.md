@@ -56,6 +56,19 @@ Then head down to `getPackages()`, make it look similar to this
 }
 ```
 
+One last thing!
+
+Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`)
+
+Add this near the top by the other permssions
+
+`<uses-permission android:name="android.permission.READ_SMS" />`
+
+And make sure that your launchMode for `.MainActivity` is
+
+`android:launchMode="singleTask"`
+
+
 ##Using the module
 
 Once everything is all setup, it's pretty simple:
