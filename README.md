@@ -8,7 +8,8 @@ Use this component to send an SMS with a callback. iOS full support, Android com
 
 ##Getting things set up
 
-The compiler needs to know how to find your sweet new module! (Make sure rnpm is installed via `npm install rnpm -g`
+The compiler needs to know how to find your sweet new module! (Make sure rnpm is installed via `npm install rnpm -g`)
+
 `rnpm link react-native-sms`
 
 ###Additional Android Setup
@@ -63,20 +64,23 @@ Once everything is all setup, it's pretty simple:
 
 ###Object Properties
 
-`body` (optional) the text that shows by default when the SMS is initiated
+`body` (optional)
+
+The text that shows by default when the SMS is initiated
 	`body: 'This is the text I want to show up by default'`
 
 `successTypes` (Andriod only, required)
-	A list of types that would trigger a "completed" response when using android
+
+An array of types that would trigger a "completed" response when using android
 	Possible values:
 		```
-		'all'
-		'inbox'
-		'sent'
-		'draft' //Saved as a draft
-		'outbox'
-		'failed'
-		'queued' //Usually if there is no network, will send later
+		'all' |
+		'inbox' |
+		'sent' |
+		'draft' |
+		'outbox' |
+		'failed' |
+		'queued'
 		```
 
 ##Example:
