@@ -8,17 +8,22 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
+import android.content.Intent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class SendSMSPackage implements ReactPackage {
+
+    private SendSMSModule sendSms = null;
+
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
         //List<NativeModule> modules = new ArrayList<>();
         //return modules;
-        return Arrays.<NativeModule>asList(new SendSMSModule(reactApplicationContext));
+        sendSms = new SendSMSModule(reactApplicationContext);
+        return Arrays.<NativeModule>asList(sendSms);
     }
 
     @Override
@@ -32,5 +37,9 @@ public class SendSMSPackage implements ReactPackage {
         //        new SendSMSModule()
        // );
         return Collections.emptyList();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        sendSms.onActivityResult(requestCode, resultCode, data);
     }
 }
