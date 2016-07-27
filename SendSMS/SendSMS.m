@@ -54,9 +54,8 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
             error = YES;
             break;
     }
-    NSString *activityType = [NSString stringWithString:@"com.apple.UIKit.activity.Message"];
     
-    _callback(@[RCTNullIfNil(activityType), @(completed), @(cancelled), @(error)]);
+    _callback([@(completed), @(cancelled), @(error)]);
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }

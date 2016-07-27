@@ -13,14 +13,12 @@ The compiler needs to know how to find your sweet new module! (Make sure rnpm is
 `rnpm link react-native-sms`
 
 ###Additional Android Setup
-Android's intents are a little more of a pain, so there are some other things you need to set up in order to get SendSMS up and running!
+Just a few quick & easy things you need to set up in order to get SendSMS up and running!
 
 1. Navigate to your MainActivity.java (`MyApp/android/app/src/main/java/some/other/directories/MainActivity.java`)
 
 
-Let's take a look inside the class...
-
-Import! Go to the top of the file
+At the top of the file
 ```
 import android.content.Intent;
 import com.tkporter.sendsms.SendSMSPackage
@@ -29,11 +27,11 @@ import com.tkporter.sendsms.SendSMSPackage
 Head over to the class and add this variable...
 ```
 public class MainActivity extends ReactActivity {
-	//maybe some other private variables up here...
+	//maybe some other private variables up here
 	private SendSMSPackage sendSMS;
 ```
 
-Then add this function
+Then add this function to the class
 ```
 @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -42,7 +40,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
-Then head down to `getPackages()`, make it look similar to this
+Then head down to `getPackages()`, it has to look similar to this
 ```
 ..... getPackages() {
 	//maybe some other variables
@@ -56,15 +54,11 @@ Then head down to `getPackages()`, make it look similar to this
 }
 ```
 
-One last thing!
-
-Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`)
-
-Add this near the top by the other permssions
+Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`), and add this near the top with the other permssions
 
 `<uses-permission android:name="android.permission.READ_SMS" />`
 
-And make sure that your launchMode for `.MainActivity` is
+Ensure your launchMode for `.MainActivity` is
 
 `android:launchMode="singleTask"`
 
@@ -77,12 +71,16 @@ Once everything is all setup, it's pretty simple:
 
 ###Object Properties
 
-`body` (optional)
+`body` (String, optional)
 
 The text that shows by default when the SMS is initiated
 	`body: 'This is the text I want to show up by default'`
 
-`successTypes` (Andriod only, required)
+`recipients` (Array (strings), optional)
+
+Provides the phone number recipients to show by default
+
+`successTypes` (Array (strings), Andriod only, required)
 
 An array of types that would trigger a "completed" response when using android
 	Possible values:
@@ -107,6 +105,7 @@ someFunction() {
 
 	SendSMS.send({
 		body: 'The default body of the SMS!',
+		recipients: ['0123456789', '9876543210'],
 		successTypes: ['sent', 'queued']
 	}, (completed, cancelled, error) => {
 
