@@ -74,7 +74,6 @@ Once everything is all setup, it's pretty simple:
 `body` (String, optional)
 
 The text that shows by default when the SMS is initiated
-	`body: 'This is the text I want to show up by default'`
 
 `recipients` (Array (strings), optional)
 
@@ -115,6 +114,17 @@ someFunction() {
 }
 ```
 
+##Troubleshooting:
 
+Having errors with import statements on Android? Something happened with linking
 
+Go to your `settings.gradle` (in `MyApp/android/settings.gradle`) and add:
+```
+include ':react-native-sms'
+project(':react-native-sms').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sms/android')
+```
 
+Then go to `MyApp/android/app/build.gradle` and add inside `dependencies { }`:
+```
+compile project(':react-native-sms')
+```
