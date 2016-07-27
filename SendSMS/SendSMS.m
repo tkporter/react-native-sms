@@ -55,7 +55,7 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
             break;
     }
     
-    _callback([@(completed), @(cancelled), @(error)]);
+    _callback(@[@(completed), @(cancelled), @(error)]);
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
