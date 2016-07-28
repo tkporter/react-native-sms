@@ -17,12 +17,14 @@ import java.util.List;
 public class SendSMSPackage implements ReactPackage {
 
     private SendSMSModule sendSms = null;
+    private static SendSMSPackage instance = null;
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
         //List<NativeModule> modules = new ArrayList<>();
         //return modules;
         sendSms = new SendSMSModule(reactApplicationContext);
+        instance = this;
         return Arrays.<NativeModule>asList(sendSms);
     }
 
@@ -37,6 +39,10 @@ public class SendSMSPackage implements ReactPackage {
         //        new SendSMSModule()
        // );
         return Collections.emptyList();
+    }
+
+    public static SendSMSPackage getInstance() {
+        return instance == null ? new SendSMSPackage() : instance;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

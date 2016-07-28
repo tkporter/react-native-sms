@@ -1,7 +1,7 @@
 #react-native-sms
 
 ##SendSMS
-Use this component to send an SMS with a callback (completed/cancelled/error). Works for iOS and Android!
+Use this component to send an SMS with a callback (completed/cancelled/error). Works for iOS and Android! Working as of RN 0.3.0
 
 ##How to install
 1. `npm install react-native-sms --save`
@@ -19,55 +19,52 @@ Just a few quick & easy things you need to set up in order to get SendSMS up and
 
 
 At the top of the file
-```
-import android.content.Intent;
+```Java
 import com.tkporter.sendsms.SendSMSPackage
 ```
 
-Head over to the class and add this variable...
-```
-public class MainActivity extends ReactActivity {
-	//maybe some other private variables up here
-	private SendSMSPackage sendSMS;
-```
-
-Then add this function to the class
-```
+Inside MainActivity (place entire function if it's not there already)
+```Java
 @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	//If this function is already inside MainActivity, just add the line below
-	sendSMS.onActivityResult(requestCode, resultCode, data);
+	//probably some other stuff here
+	SendSMSPackage.getInstance().onActivityResult(requestCode, resultCode, data);
 }
 ```
 
-Then head down to `getPackages()`, it has to look similar to this
-```
-..... getPackages() {
-	//maybe some other variables
-	sendSMS = new SendSMSPackage();
+Then head to your [MyApp]Application.java (`MyApp/android/app/src/main/java/so/many/dirs/MyAppApplication.java`)
 
+Make sure `import com.tkporter.sendsms.SendSMSPackage;` is there
+
+Then head down to `getPackages()`, it has to look similar to this
+```Java
+protected List<ReactPackage> getPackages() {
+	//some variables
+	
 	return Arrays.<ReactPackage>asList(
 		//probably some items like `new BlahPackage(),`
 		//just add into the list (don't forget commas!):
-		sendSMS
+		new SendSMSPackage()
 	);
 }
 ```
 
 Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`), and add this near the top with the other permssions
-
-`<uses-permission android:name="android.permission.READ_SMS" />`
+```XML
+<uses-permission android:name="android.permission.READ_SMS" />
+```
 
 Ensure your launchMode for `.MainActivity` is
-
-`android:launchMode="singleTask"`
-
+```XML
+android:launchMode="singleTask"
+```
 
 ##Using the module
 
 Once everything is all setup, it's pretty simple:
-
-`SendSMS.send(myOptionsObject, callback);`
+```JavaScript
+SendSMS.send(myOptionsObject, callback);
+```
 
 ###Object Properties
 
@@ -82,20 +79,15 @@ Provides the phone number recipients to show by default
 `successTypes` (Array (strings), Andriod only, required)
 
 An array of types that would trigger a "completed" response when using android
-	Possible values:
-		```
-		'all' |
-		'inbox' |
-		'sent' |
-		'draft' |
-		'outbox' |
-		'failed' |
-		'queued'
-		```
+
+Possible values:
+```JavaScript
+'all' | 'inbox' | 'sent' | 'draft' | 'outbox' | 'failed' | 'queued'
+```
 
 ##Example:
 
-```
+```JavaScript
 import SendSMS from 'react-native-sms'
 
 //some stuff
