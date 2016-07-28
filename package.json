@@ -68,7 +68,11 @@
   "keywords": [
     "react-native",
     "ios",
-    "react-component"
+    "react-component",
+    "sms",
+    "callback",
+    "android",
+    "sweet-react-native-components-that-are-totally-awesome"
   ],
   "license": "MIT",
   "main": "index.js",
