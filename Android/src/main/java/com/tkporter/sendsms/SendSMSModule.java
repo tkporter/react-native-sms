@@ -15,6 +15,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
 
     private final ReactApplicationContext reactContext;
     private Callback callback = null;
+    private static final int REQUEST_CODE = 5235;
 
     public SendSMSModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -31,7 +32,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //System.out.println("in module onActivityResult() request " + requestCode + " result " + resultCode);
         //canceled intent
-        if (resultCode == Activity.RESULT_CANCELED) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_CANCELED) {
             sendCallback(false, true, false);
         }
     }
@@ -71,7 +72,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             }
 
             sendIntent.setType("vnd.android-dir/mms-sms");
-            reactContext.startActivityForResult(sendIntent, 1, sendIntent.getExtras());
+            reactContext.startActivityForResult(sendIntent, REQUEST_CODE, sendIntent.getExtras());
         } catch (Exception e) {
             //error!
             sendCallback(false, false, true);

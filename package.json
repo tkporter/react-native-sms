@@ -19,39 +19,51 @@
         "type": "hosted"
       },
       "/Users/typorter/Flare/flare"
+    ],
+    [
+      {
+        "name": "react-native-sms",
+        "raw": "react-native-sms@^1.1.3",
+        "rawSpec": "^1.1.3",
+        "scope": null,
+        "spec": ">=1.1.3 <2.0.0",
+        "type": "range"
+      },
+      "/Users/typorter/flare-one/flare"
     ]
   ],
-  "_from": "git+https://github.com/tkporter/react-native-sms.git",
-  "_id": "react-native-sms@1.0.0",
+  "_from": "react-native-sms@^1.1.3",
+  "_id": "react-native-sms@1.1.3",
   "_inCache": true,
   "_installable": true,
   "_location": "/react-native-sms",
+  "_nodeVersion": "6.2.2",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/react-native-sms-1.1.3.tgz_1469746665273_0.3663043538108468"
+  },
+  "_npmUser": {
+    "email": "trkporter@ucdavis.edu",
+    "name": "tkporter"
+  },
+  "_npmVersion": "3.9.6",
   "_phantomChildren": {},
   "_requested": {
-    "hosted": {
-      "directUrl": "https://raw.githubusercontent.com/tkporter/react-native-sms/master/package.json",
-      "gitUrl": "git://github.com/tkporter/react-native-sms.git",
-      "httpsUrl": "git+https://github.com/tkporter/react-native-sms.git",
-      "shortcut": "github:tkporter/react-native-sms",
-      "ssh": "git@github.com:tkporter/react-native-sms.git",
-      "sshUrl": "git+ssh://git@github.com/tkporter/react-native-sms.git",
-      "type": "github"
-    },
     "name": "react-native-sms",
-    "raw": "react-native-sms@git+https://github.com/tkporter/react-native-sms.git",
-    "rawSpec": "git+https://github.com/tkporter/react-native-sms.git",
+    "raw": "react-native-sms@^1.1.3",
+    "rawSpec": "^1.1.3",
     "scope": null,
-    "spec": "git+https://github.com/tkporter/react-native-sms.git",
-    "type": "hosted"
+    "spec": ">=1.1.3 <2.0.0",
+    "type": "range"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "git+https://github.com/tkporter/react-native-sms.git#87b185344d9e9bf9c902b4b0a72eb7bfe53d9a0a",
-  "_shasum": "40a2753b303ef72db6bc22b506a53a2d76717ea4",
+  "_resolved": "https://registry.npmjs.org/react-native-sms/-/react-native-sms-1.1.3.tgz",
+  "_shasum": "3d64f2d3c7aaeb808e26edee74f8455acb1eaa7e",
   "_shrinkwrap": null,
-  "_spec": "react-native-sms@git+https://github.com/tkporter/react-native-sms.git",
-  "_where": "/Users/typorter/Flare/flare",
+  "_spec": "react-native-sms@^1.1.3",
+  "_where": "/Users/typorter/flare-one/flare",
   "author": {
     "email": "trkporter@ucdavis.edu",
     "name": "Trevor Porter",
@@ -63,21 +75,29 @@
   "dependencies": {},
   "description": "React Native SMS component",
   "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "3d64f2d3c7aaeb808e26edee74f8455acb1eaa7e",
+    "tarball": "https://registry.npmjs.org/react-native-sms/-/react-native-sms-1.1.3.tgz"
+  },
   "gitHead": "87b185344d9e9bf9c902b4b0a72eb7bfe53d9a0a",
   "homepage": "https://github.com/tkporter/react-native-sms",
   "keywords": [
     "react-native",
     "ios",
-    "react-component",
-    "sms",
-    "callback",
-    "android",
-    "sweet-react-native-components-that-are-totally-awesome"
+    "react-component"
   ],
   "license": "MIT",
   "main": "index.js",
+  "maintainers": [
+    {
+      "email": "trkporter@ucdavis.edu",
+      "name": "tkporter"
+    }
+  ],
   "name": "react-native-sms",
   "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/tkporter/react-native-sms.git"

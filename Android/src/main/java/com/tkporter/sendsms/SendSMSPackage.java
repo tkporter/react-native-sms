@@ -21,10 +21,10 @@ public class SendSMSPackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
-        //List<NativeModule> modules = new ArrayList<>();
-        //return modules;
         sendSms = new SendSMSModule(reactApplicationContext);
-        instance = this;
+        if (instance == null) {
+            instance = this;
+        }
         return Arrays.<NativeModule>asList(sendSms);
     }
 
@@ -35,14 +35,15 @@ public class SendSMSPackage implements ReactPackage {
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        //return Arrays.<ViewManager>asList(
-        //        new SendSMSModule()
-       // );
         return Collections.emptyList();
     }
 
     public static SendSMSPackage getInstance() {
-        return instance == null ? new SendSMSPackage() : instance;
+        if (instance == null) {
+            instance = new SendSMSPackage();
+        }
+
+        return instance;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
