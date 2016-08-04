@@ -44,7 +44,7 @@ protected List<ReactPackage> getPackages() {
 	return Arrays.<ReactPackage>asList(
 		//probably some items like `new BlahPackage(),`
 		//just add into the list (don't forget commas!):
-		new SendSMSPackage()
+		SendSMSPackage.getInstance()
 	);
 }
 ```
