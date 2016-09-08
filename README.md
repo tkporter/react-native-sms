@@ -88,13 +88,13 @@ Possible values:
 ##Example:
 
 ```JavaScript
-import { sendSms } from 'react-native-sms'
+import SendSMS from 'react-native-sms'
 
 //some stuff
 
 someFunction() {
 
-	sendSms({
+	SendSMS.send({
 		body: 'The default body of the SMS!',
 		recipients: ['0123456789', '9876543210'],
 		successTypes: ['sent', 'queued']
