@@ -40,7 +40,7 @@ Then head down to `getPackages()`, it has to look similar to this
 ```Java
 protected List<ReactPackage> getPackages() {
 	//some variables
-	
+
 	return Arrays.<ReactPackage>asList(
 		//probably some items like `new BlahPackage(),`
 		//just add into the list (don't forget commas!):
@@ -88,13 +88,13 @@ Possible values:
 ##Example:
 
 ```JavaScript
-import SendSMS from 'react-native-sms'
+import { sendSms } from 'react-native-sms'
 
 //some stuff
 
 someFunction() {
 
-	SendSMS.send({
+	sendSms({
 		body: 'The default body of the SMS!',
 		recipients: ['0123456789', '9876543210'],
 		successTypes: ['sent', 'queued']
