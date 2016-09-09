@@ -2,6 +2,8 @@ package com.tkporter.sendsms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Telephony;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
