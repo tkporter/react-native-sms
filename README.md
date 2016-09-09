@@ -1,7 +1,10 @@
 #react-native-sms
 
 ##SendSMS
-Use this component to send an SMS with a callback (completed/cancelled/error). Works for iOS and Android! Working as of RN 0.3.0
+Use this component to send an SMS with a callback (completed/cancelled/error). Works for iOS and Android! Working as of RN 0.33.0
+
+### UPDATES:
+Now supports 0.33.0-- keep in mind this could pose problems with older versions of RN
 
 ##How to install
 1. `npm install react-native-sms --save`
