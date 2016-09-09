@@ -2,6 +2,8 @@ package com.tkporter.sendsms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Telephony;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -53,7 +55,20 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             String body = options.hasKey("body") ? options.getString("body") : "";
             ReadableArray recipients = options.hasKey("recipients") ? options.getArray("recipients") : null;
 
-            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+            Intent sendIntent;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(reactContext);
+                sendIntent = new Intent(Intent.ACTION_SEND);
+                if (defaultSmsPackageName != null){
+                    sendIntent.setPackage(defaultSmsPackageName);
+                }
+                sendIntent.setType("text/plain");
+            }else {
+                sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setType("vnd.android-dir/mms-sms");
+            }
+
             sendIntent.putExtra("sms_body", body);
 
             //if recipients specified
@@ -71,7 +86,6 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
                 sendIntent.putExtra("address", recipientString);
             }
 
-            sendIntent.setType("vnd.android-dir/mms-sms");
             reactContext.startActivityForResult(sendIntent, REQUEST_CODE, sendIntent.getExtras());
         } catch (Exception e) {
             //error!
