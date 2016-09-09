@@ -2,6 +2,8 @@ package com.tkporter.sendsms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Telephony;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -20,6 +22,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
     public SendSMSModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
+        reactContext.addActivityEventListener(this);
     }
 
     @Override
@@ -29,12 +32,17 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
         //System.out.println("in module onActivityResult() request " + requestCode + " result " + resultCode);
         //canceled intent
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_CANCELED) {
             sendCallback(false, true, false);
         }
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+
     }
 
     public void sendCallback(Boolean completed, Boolean cancelled, Boolean error) {
@@ -53,7 +61,20 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             String body = options.hasKey("body") ? options.getString("body") : "";
             ReadableArray recipients = options.hasKey("recipients") ? options.getArray("recipients") : null;
 
-            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+            Intent sendIntent;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(reactContext);
+                sendIntent = new Intent(Intent.ACTION_SEND);
+                if (defaultSmsPackageName != null){
+                    sendIntent.setPackage(defaultSmsPackageName);
+                }
+                sendIntent.setType("text/plain");
+            }else {
+                sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setType("vnd.android-dir/mms-sms");
+            }
+
             sendIntent.putExtra("sms_body", body);
 
             //if recipients specified
@@ -71,7 +92,6 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
                 sendIntent.putExtra("address", recipientString);
             }
 
-            sendIntent.setType("vnd.android-dir/mms-sms");
             reactContext.startActivityForResult(sendIntent, REQUEST_CODE, sendIntent.getExtras());
         } catch (Exception e) {
             //error!
@@ -81,4 +101,3 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
     }
 
 }
-
