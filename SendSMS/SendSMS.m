@@ -36,8 +36,11 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
         }
 
         messageController.messageComposeDelegate = self;
-        UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
-        [rootView presentViewController:messageController animated:YES completion:nil];
+        UIViewController *currentViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while(currentViewController.presentedViewController) {
+            currentViewController = currentViewController.presentedViewController;
+        }
+        [currentViewController presentViewController:messageController animated:YES completion:nil];
     } else {
         bool completed = NO, cancelled = NO, error = YES;
         _callback(@[@(completed), @(cancelled), @(error)]);
