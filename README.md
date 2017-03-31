@@ -1,21 +1,21 @@
-#react-native-sms
+# react-native-sms
 
-##SendSMS
+## SendSMS
 Use this component to send an SMS with a callback (completed/cancelled/error). Works for iOS and Android! Working as of RN 0.33.0
 
 ### UPDATES:
 Now supports 0.33.0-- keep in mind this could pose problems with older versions of RN
 
-##How to install
+## How to install
 1. `npm install react-native-sms --save`
 
-##Getting things set up
+## Getting things set up
 
 The compiler needs to know how to find your sweet new module! (Make sure rnpm is installed via `npm install rnpm -g`)
 
 `rnpm link react-native-sms`
 
-###Additional Android Setup
+### Additional Android Setup
 Just a few quick & easy things you need to set up in order to get SendSMS up and running!
 
 1. Navigate to your MainActivity.java (`MyApp/android/app/src/main/java/some/other/directories/MainActivity.java`)
@@ -62,14 +62,14 @@ Ensure your launchMode for `.MainActivity` is
 android:launchMode="singleTask"
 ```
 
-##Using the module
+## Using the module
 
 Once everything is all setup, it's pretty simple:
 ```JavaScript
 SendSMS.send(myOptionsObject, callback);
 ```
 
-###Object Properties
+### Object Properties
 
 `body` (String, optional)
 
@@ -88,7 +88,7 @@ Possible values:
 'all' | 'inbox' | 'sent' | 'draft' | 'outbox' | 'failed' | 'queued'
 ```
 
-##Example:
+## Example:
 
 ```JavaScript
 import SendSMS from 'react-native-sms'
@@ -109,7 +109,7 @@ someFunction() {
 }
 ```
 
-##Troubleshooting:
+## Troubleshooting:
 
 Having errors with import statements on Android? Something happened with linking
 
