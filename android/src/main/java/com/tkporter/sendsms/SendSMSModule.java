@@ -76,6 +76,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             }
 
             sendIntent.putExtra("sms_body", body);
+            sendIntent.putExtra("exit_on_sent", true);
 
             //if recipients specified
             if (recipients != null) {
