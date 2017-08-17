@@ -13,6 +13,9 @@ The compiler needs to know how to find your sweet new module! (Make sure rnpm is
 `rnpm link react-native-sms`
 
 ### Additional Android Setup
+
+Note: If using RN < v0.47, use react-native-sms <= v1.4.2
+
 Just a few quick & easy things you need to set up in order to get SendSMS up and running!
 
 1. Navigate to your MainActivity.java (`MyApp/android/app/src/main/java/some/other/directories/MainActivity.java`)
