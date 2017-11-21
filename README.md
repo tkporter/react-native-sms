@@ -38,7 +38,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
-Then head to your [MyApp]Application.java (`MyApp/android/app/src/main/java/so/many/dirs/MyAppApplication.java`)
+2. Head to your [MyApp]Application.java (`MyApp/android/app/src/main/java/so/many/dirs/MyAppApplication.java`)
 
 Make sure `import com.tkporter.sendsms.SendSMSPackage;` is there
 
@@ -55,7 +55,7 @@ protected List<ReactPackage> getPackages() {
 }
 ```
 
-Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`), and add this near the top with the other permssions
+3. Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`), and add this near the top with the other permssions
 ```XML
 <uses-permission android:name="android.permission.READ_SMS" />
 ```
@@ -63,6 +63,14 @@ Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidMa
 Ensure your launchMode for `.MainActivity` is
 ```XML
 android:launchMode="singleTask"
+```
+
+4. Navigate to your app's `build.gradle` (at `MyApp/android/app/build.gradle`), and add the project to your dependencies
+```Java
+dependencies {
+	// other projects may be compiled here
+	compile project(':react-native-sms')
+}
 ```
 
 ## Using the module
