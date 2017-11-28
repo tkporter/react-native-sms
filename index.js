@@ -3,8 +3,8 @@
 
 import { NativeModules, PermissionsAndroid, Platform } from 'react-native'
 
-async function send(options: Object, callback: () => void) {
-  if (Platform.OS === 'android') {
+async function send(options: Object, callback: () => void, requestPermission: boolean = true) {
+  if (Platform.OS === 'android' && requestPermission) {
     try {
       let authorized = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_SMS)
     } catch (error) {
