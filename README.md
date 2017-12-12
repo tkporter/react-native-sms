@@ -33,6 +33,7 @@ Inside MainActivity (place entire function if it's not there already)
 ```Java
 @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	super.onActivityResult(requestCode, resultCode, data);
 	//probably some other stuff here
 	SendSMSPackage.getInstance().onActivityResult(requestCode, resultCode, data);
 }
