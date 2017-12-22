@@ -90,6 +90,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
                     recipientString += recipients.getString(i);
                     recipientString += separator;
                 }
+                recipientString = recipientString.substring(0, recipientString.length() - 1);
                 sendIntent.putExtra("address", recipientString);
             }
 
