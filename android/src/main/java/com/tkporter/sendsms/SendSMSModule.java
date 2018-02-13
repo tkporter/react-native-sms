@@ -4,20 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.provider.Telephony;
+import android.telephony.SmsManager;
 
 import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReadableMap;
 
 public class SendSMSModule extends ReactContextBaseJavaModule implements ActivityEventListener {
 
+    private static final int REQUEST_CODE = 5235;
     private final ReactApplicationContext reactContext;
     private Callback callback = null;
-    private static final int REQUEST_CODE = 5235;
 
     public SendSMSModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -56,6 +57,12 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
     public void send(ReadableMap options, final Callback callback) {
         try {
             this.callback = callback;
+
+            if (options.hasKey("direct_send") ? options.getBoolean("direct_send") : false) {
+                sendDirect(options, callback);
+                return;
+            }
+
             new SendSMSObserver(reactContext, this, options).start();
 
             String body = options.hasKey("body") ? options.getString("body") : "";
@@ -66,11 +73,11 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(reactContext);
                 sendIntent = new Intent(Intent.ACTION_SEND);
-                if (defaultSmsPackageName != null){
+                if (defaultSmsPackageName != null) {
                     sendIntent.setPackage(defaultSmsPackageName);
                 }
                 sendIntent.setType("text/plain");
-            }else {
+            } else {
                 sendIntent = new Intent(Intent.ACTION_VIEW);
                 sendIntent.setType("vnd.android-dir/mms-sms");
             }
@@ -83,7 +90,7 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             if (recipients != null) {
                 //Samsung for some reason uses commas and not semicolons as a delimiter
                 String separator = ";";
-                if(android.os.Build.MANUFACTURER.equalsIgnoreCase("Samsung")){
+                if (android.os.Build.MANUFACTURER.equalsIgnoreCase("Samsung")) {
                     separator = ",";
                 }
                 String recipientString = "";
@@ -102,4 +109,31 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
         }
     }
 
+    /**
+     * todo: do it in a background process
+     *
+     * @param options
+     * @param callback
+     */
+    private void sendDirect(ReadableMap options, Callback callback) {
+
+        String msg = options.hasKey("body") ? options.getString("body") : "";
+
+        ReadableArray recipients = options.hasKey("recipients") ? options.getArray("recipients") : null;
+        for (int i = 0; i < recipients.size(); i++) {
+            String phoneNo = recipients.getString(i);
+
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNo, null, msg, null, null);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                sendCallback(false, false, true);
+                return;
+            }
+        }
+
+        sendCallback(true, false, false);
+
+    }
 }
