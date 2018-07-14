@@ -1,5 +1,4 @@
 declare module "react-native-sms" {
-
   export enum AndroidSuccessTypes {
     all = "all",
     inbox = "inbox",
