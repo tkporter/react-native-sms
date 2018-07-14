@@ -1,4 +1,3 @@
-
 declare module "react-native-sms" {
 
   export enum AndroidSuccessTypes {
