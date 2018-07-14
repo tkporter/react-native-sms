@@ -10,9 +10,9 @@ Currently, only user-initiated sending of an SMS is supported. This means you ca
 
 ## Getting things set up
 
-The compiler needs to know how to find your sweet new module! (Make sure rnpm is installed via `npm install rnpm -g`)
+The compiler needs to know how to find your sweet new module!
 
-`rnpm link react-native-sms`
+`react-native link react-native-sms`
 
 ### Additional Android Setup
 
