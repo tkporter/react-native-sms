@@ -3,18 +3,30 @@
 
 import { NativeModules, PermissionsAndroid, Platform } from 'react-native'
 
-async function send(options: Object, callback: () => void) {
-  if (Platform.OS === 'android') {
-    try {
-      let authorized = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_SMS)
-    } catch (error) {
-
-    }
+async function checkForAndroidAuthorized() {
+  if (Platform.OS !== 'android') {
+    return false;
   }
-  NativeModules.SendSMS.send(options, callback);
+
+  let authorized;
+
+  try {
+    authorized = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_SMS);
+  } catch (error) {
+    // do nothing
+  }
+
+  return authorized === PermissionsAndroid.RESULTS.GRANTED;
 }
 
-let SendSMS = {
+async function send(options: Object, callback: () => void) {
+  const isAndroidAuthorized = await checkForAndroidAuthorized();
+  if (Platform.OS !== 'android' || isAndroidAuthorized) {
+    NativeModules.SendSMS.send(options, callback);
+  }
+}
+
+const SendSMS = {
   send
 }
 
