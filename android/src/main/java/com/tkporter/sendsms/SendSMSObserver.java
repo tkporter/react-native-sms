@@ -35,6 +35,7 @@ public class SendSMSObserver extends ContentObserver {
     private ContentResolver resolver = null;
     private ReadableArray successTypes;
     private Map<String, Integer> types;
+    private boolean isAuthorizedForCallback;
 
 
     public SendSMSObserver(Context context, SendSMSModule module, ReadableMap options) {
@@ -52,6 +53,7 @@ public class SendSMSObserver extends ContentObserver {
         this.successTypes = getSuccessTypes(options);
         this.module = module;
         this.resolver = context.getContentResolver();
+        this.isAuthorizedForCallback = isAuthorizedForCallback(options);
 
     }
 
@@ -61,6 +63,10 @@ public class SendSMSObserver extends ContentObserver {
         } else {
             throw new IllegalStateException("Must provide successTypes. Read react-native-sms/README.md");
         }
+    }
+
+    private boolean isAuthorizedForCallback(ReadableMap options) {
+        return options.hasKey("isAuthorizedForCallback") ? options.getBoolean("isAuthorizedForCallback") : false;
     }
 
     public void start() {
@@ -85,6 +91,12 @@ public class SendSMSObserver extends ContentObserver {
         stop();
     }
 
+    private void messageGeneric() {
+        //User has not granted READ_SMS permission
+        module.sendCallback(false, false, false);
+        stop();
+    }
+
     private void messageError() {
         //error!
         module.sendCallback(false, false, true);
@@ -96,6 +108,11 @@ public class SendSMSObserver extends ContentObserver {
         Cursor cursor = null;
 
         try {
+            if (!this.isAuthorizedForCallback) {
+                messageGeneric();
+                return;
+            }
+
             cursor = resolver.query(uri, PROJECTION, null, null, null);
 
             if (cursor != null && cursor.moveToFirst()) {

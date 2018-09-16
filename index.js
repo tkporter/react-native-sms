@@ -3,7 +3,7 @@
 
 import { NativeModules, PermissionsAndroid, Platform } from 'react-native'
 
-async function checkForAndroidAuthorized() {
+async function checkAndroidReadSmsAuthorized() {
   if (Platform.OS !== 'android') {
     return false;
   }
@@ -19,9 +19,16 @@ async function checkForAndroidAuthorized() {
   return authorized === PermissionsAndroid.RESULTS.GRANTED;
 }
 
+function isAuthorizedForCallback(androidCanReadSms) {
+  return Platform.OS !== 'android' || androidCanReadSms;
+}
+
 async function send(options: Object, callback: () => void) {
-  const isAndroidAuthorized = await checkForAndroidAuthorized();
-  if (Platform.OS !== 'android' || isAndroidAuthorized) {
+  const androidCanReadSms = await checkAndroidReadSmsAuthorized();
+
+  options.isAuthorizedForCallback = isAuthorizedForCallback(androidCanReadSms);
+
+  if (options.isAuthorizedForCallback || options.allowAndroidSendWithoutReadPermission) {
     NativeModules.SendSMS.send(options, callback);
   }
 }
