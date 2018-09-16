@@ -3,7 +3,10 @@
 ## SendSMS
 Use this RN component to send an SMS with a callback (completed/cancelled/error). iOS and Android are both supported.
 
-Currently, only user-initiated sending of an SMS is supported. This means you can't use `react-native-sms` to send an SMS in the background-- this package displays the native SMS view (populated with any recipients/body you want), and gives a callback describing the status of the SMS (completed/cancelled/error). PRs are welcome!
+Currently, only user-initiated sending of an SMS is supported. 
+This means you can't use `react-native-sms` to send an SMS in the background -- this package displays the native SMS view (populated with any recipients/body you want), and gives a callback describing the status of the SMS (completed/cancelled/error). PRs are welcome!
+### Update
+A new prop was added to enable direct sending of SMS from Android. see documentation below.
 
 ## How to install
 1. `npm install react-native-sms --save`
@@ -29,7 +32,7 @@ import android.content.Intent; // <-- include if not already there
 import com.tkporter.sendsms.SendSMSPackage;
 ```
 
-Inside MainActivity (place entire function if it's not there already)
+Inside **`MainActivity`** (place entire function if it's not there already)
 ```Java
 @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -39,7 +42,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
-Then head to your [MyApp]Application.java (`MyApp/android/app/src/main/java/so/many/dirs/MyAppApplication.java`)
+Then head to your **`[MyApp]Application.java`** (`MyApp/android/app/src/main/java/so/many/dirs/MyAppApplication.java`)
 
 Make sure `import com.tkporter.sendsms.SendSMSPackage;` is there
 
@@ -56,15 +59,16 @@ protected List<ReactPackage> getPackages() {
 }
 ```
 
-Navigate to your `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`), and add this near the top with the other permssions
+FYI: this permission will automatically be merged into your built `AndroidManifest.xml` (at `MyApp/android/app/src/main/AndroidManifest.xml`)
 ```XML
 <uses-permission android:name="android.permission.READ_SMS" />
 ```
 
-Ensure your launchMode for `.MainActivity` is
+If `direct_send` is `false` or undefined - then ensure your launchMode for `MainActivity` is
 ```XML
 android:launchMode="singleTask"
 ```
+in order for the "back" button to return to your app after the message window is closed.
 
 ## Using the module
 
@@ -84,6 +88,11 @@ The text that shows by default when the SMS is initiated
 Provides the phone number recipients to show by default
 
 `successTypes` (Array (strings), Andriod only, required)
+
+`direct_send` (boolean, optional)
+
+If true, the Android app will send the SMS directly (without a native messaging app).
+It will loop on the recepients and send one by one.
 
 An array of types that would trigger a "completed" response when using android
 
