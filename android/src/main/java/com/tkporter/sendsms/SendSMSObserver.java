@@ -70,6 +70,10 @@ public class SendSMSObserver extends ContentObserver {
     }
 
     public void start() {
+        if (!this.isAuthorizedForCallback) {
+            return;
+        }
+
         if (resolver != null) {
             resolver.registerContentObserver(uri, true, this);
         }
