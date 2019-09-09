@@ -13,6 +13,7 @@ declare module "react-native-sms" {
     body?: string;
     recipients?: string[];
     successTypes?: AndroidSuccessTypes[];
+    allowAndroidSendWithoutReadPermission?: boolean;
   }
 
   export function send(options: SendSmsOptions, callback: (completed: boolean, cancelled: boolean, error: boolean) => void): Promise<void>;
