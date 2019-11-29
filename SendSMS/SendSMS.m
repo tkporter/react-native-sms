@@ -26,6 +26,7 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
 
         NSString *body = options[@"body"];
         NSArray *recipients = options[@"recipients"];
+        NSString *attachmentUrl = options[@"attachmentUrl"];
 
         if (body) {
           messageController.body = body;
@@ -34,6 +35,24 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
         if (recipients) {
           messageController.recipients = recipients;
         }
+
+        if (attachmentUrl) {
+          NSString *attachmentType = options[@"attachmentIosType"];
+          NSString *attachmentFilename = options[@"attachmentIosFilename"];
+
+          NSError *error;
+          NSData *attachmentData = [NSData dataWithContentsOfURL:[NSURL URLWithString:attachmentUrl]
+                                                     options:(NSDataReadingOptions)0
+                                                       error:&error];
+
+          bool attached = [messageController addAttachmentData:attachmentData typeIdentifier:attachmentType filename:attachmentFilename];
+
+          if (!attached) {
+            bool completed = NO, cancelled = NO, error = YES;
+            _callback(@[@(completed), @(cancelled), @(error)]);
+          }
+        }
+
 
         messageController.messageComposeDelegate = self;
         UIViewController *currentViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
