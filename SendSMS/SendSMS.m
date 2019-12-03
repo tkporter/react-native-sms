@@ -26,7 +26,7 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
 
         NSString *body = options[@"body"];
         NSArray *recipients = options[@"recipients"];
-        NSString *attachmentUrl = options[@"attachmentUrl"];
+        NSDictionary *attachment = options[@"attachment"];
 
         if (body) {
           messageController.body = body;
@@ -36,9 +36,10 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
           messageController.recipients = recipients;
         }
 
-        if (attachmentUrl) {
-          NSString *attachmentType = options[@"attachmentIosType"];
-          NSString *attachmentFilename = options[@"attachmentIosFilename"];
+        if (attachment) {
+          NSString *attachmentUrl = attachment[@"url"];
+          NSString *attachmentType = attachment[@"iosType"];
+          NSString *attachmentFilename = attachment[@"iosFilename"];
 
           NSError *error;
           NSData *attachmentData = [NSData dataWithContentsOfURL:[NSURL URLWithString:attachmentUrl]
