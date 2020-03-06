@@ -20,6 +20,7 @@ declare module "react-native-sms" {
     body?: string;
     recipients?: string[];
     successTypes?: AndroidSuccessTypes[];
+    allowAndroidSendWithoutReadPermission?: boolean;
     attachment?: AttachmentOptions;
   }
 
