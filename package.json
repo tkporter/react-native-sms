@@ -2,12 +2,7 @@
   "name": "react-native-sms",
   "version": "1.10.1",
   "description": "A React Native library for Sending an SMS with Callback",
-  "main": "index",
-  "rnpm": {
-    "android": {
-      "packageInstance": "SendSMSPackage.getInstance()"
-    }
-  },
+  "main": "index.js",
   "scripts": {
     "test": "flow"
   },

@@ -1,14 +1,4 @@
 declare module "react-native-sms" {
-  export enum AndroidSuccessTypes {
-    all = "all",
-    inbox = "inbox",
-    sent = "sent",
-    draft = "draft",
-    outbox = "outbox",
-    failed = "failed",
-    queued = "queued",
-  }
-
   export interface AttachmentOptions {
     url: string;
     iosType?: string;
@@ -19,7 +9,6 @@ declare module "react-native-sms" {
   export interface SendSmsOptions {
     body?: string;
     recipients?: string[];
-    successTypes?: AndroidSuccessTypes[];
     allowAndroidSendWithoutReadPermission?: boolean;
     attachment?: AttachmentOptions;
   }
