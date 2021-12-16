@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
+import android.net.Uri;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Callback;
@@ -68,6 +69,11 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             String body = options.hasKey("body") ? options.getString("body") : "";
             ReadableArray recipients = options.hasKey("recipients") ? options.getArray("recipients") : null;
 
+            ReadableMap attachment = null;
+            if (options.hasKey("attachment")) {
+                attachment = options.getMap("attachment");
+            }
+
             Intent sendIntent;
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -85,6 +91,14 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             sendIntent.putExtra("sms_body", body);
             sendIntent.putExtra(sendIntent.EXTRA_TEXT, body);
             sendIntent.putExtra("exit_on_sent", true);
+
+            if (attachment != null) {
+                Uri attachmentUrl = Uri.parse(attachment.getString("url"));
+                sendIntent.putExtra(Intent.EXTRA_STREAM, attachmentUrl);
+
+                String type = attachment.getString("androidType");
+                sendIntent.setType(type);
+            }
 
             //if recipients specified
             if (recipients != null) {

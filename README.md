@@ -3,7 +3,7 @@
 ## SendSMS
 Use this RN component to send an SMS with a callback (completed/cancelled/error). iOS and Android are both supported.
 
-Currently, only user-initiated sending of an SMS is supported. 
+Currently, only user-initiated sending of an SMS is supported.
 This means you can't use `react-native-sms` to send an SMS in the background -- this package displays the native SMS view (populated with any recipients/body you want), and gives a callback describing the status of the SMS (completed/cancelled/error). PRs are welcome!
 ### Update
 A new prop was added to enable direct sending of SMS from Android. see documentation below.
@@ -100,6 +100,13 @@ Possible values:
 ```JavaScript
 'all' | 'inbox' | 'sent' | 'draft' | 'outbox' | 'failed' | 'queued'
 ```
+|Key|Type|Platforms|Required?|Description|
+|-|-|-|-|-|
+| `body` | String | iOS/Android | No | The text that shows by default when the SMS is initiated |
+| `recipients` | Array (strings) | iOS/Android | No | Provides the phone number recipients to show by default |
+| `successTypes` | Array (strings) | Android | Yes | An array of types that would trigger a "completed" response when using android <br/><br/> Possible values: <br/><br/> `'all' 'inbox' 'sent' 'draft' 'outbox' 'failed' 'queued'` |
+| `allowAndroidSendWithoutReadPermission` | boolean | Android | No | By default, SMS will only be initiated on Android if the user accepts the `READ_SMS` permission (which is required to provide completion statuses to the callback). <br/><br/> Passing `true` here will allow the user to send a message even if they decline the `READ_SMS` permission, and will then provide generic callback values (all false) to your application. |
+|`attachment` | Object { url: string, iosType?: string, iosFilename?: string, androidType?: string } | iOS/Android | No | Pass a url to attach to the MMS message. <br/><br/>Currently known to work with images.
 
 ## Example:
 
@@ -109,11 +116,43 @@ import SendSMS from 'react-native-sms'
 //some stuff
 
 someFunction() {
+	SendSMS.send({
+		body: 'The default body of the SMS!',
+		recipients: ['0123456789', '9876543210'],
+		successTypes: ['sent', 'queued'],
+		allowAndroidSendWithoutReadPermission: true
+	}, (completed, cancelled, error) => {
+
+		console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+
+	});
+}
+```
+
+## Attachment example
+
+```JavaScript
+import SendSMS from 'react-native-sms'
+import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource'
+
+someFunction() {
+	const image = require('assets/your-image.jpg');
+	const metadata = resolveAssetSource(image);
+	const url = metadata.uri;
+
+	const attachment = {
+		url: url,
+		iosType: 'public.jpeg',
+		iosFilename: 'Image.jpeg',
+		androidType: 'image/*'
+	};
 
 	SendSMS.send({
 		body: 'The default body of the SMS!',
 		recipients: ['0123456789', '9876543210'],
-		successTypes: ['sent', 'queued']
+		successTypes: ['sent', 'queued'],
+		allowAndroidSendWithoutReadPermission: true,
+		attachment: attachment
 	}, (completed, cancelled, error) => {
 
 		console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
