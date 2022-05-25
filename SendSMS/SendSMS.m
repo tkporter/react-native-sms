@@ -56,7 +56,7 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)options :(RCTResponseSenderBlock)callback
 
 
         messageController.messageComposeDelegate = self;
-        UIViewController *currentViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        UIViewController *currentViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
         while(currentViewController.presentedViewController) {
             currentViewController = currentViewController.presentedViewController;
         }
