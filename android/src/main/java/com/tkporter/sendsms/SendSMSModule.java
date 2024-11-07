@@ -2,6 +2,8 @@ package com.tkporter.sendsms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.provider.Telephony;
 import android.net.Uri;
@@ -88,6 +90,12 @@ public class SendSMSModule extends ReactContextBaseJavaModule implements Activit
             if (attachment != null) {
                 Uri attachmentUrl = Uri.parse(attachment.getString("url"));
                 sendIntent.putExtra(Intent.EXTRA_STREAM, attachmentUrl);
+                
+                final PackageManager packageManager = getReactApplicationContext().getPackageManager();
+                for (ResolveInfo info : packageManager.queryIntentActivities(sendIntent, PackageManager.GET_RESOLVED_FILTER)) {
+                    final String packageName = info.activityInfo.packageName;
+                    getReactApplicationContext().grantUriPermission(packageName, attachmentUrl, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
 
                 String type = attachment.getString("androidType");
                 sendIntent.setType(type);
