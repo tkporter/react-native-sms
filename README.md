@@ -26,7 +26,7 @@ Just a few quick & easy things you need to set up in order to get SendSMS up and
 At the top of the file
 ```Java
 import android.content.Intent; // <-- include if not already there
-import com.tkporter.sendsms.SendSMSPackage;
+import com.tkporter.sendsms.SendSMSPackage; // <-- include if not already there
 ```
 
 Inside MainActivity (place entire function if it's not there already)
